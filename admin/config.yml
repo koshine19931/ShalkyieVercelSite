@@ -1,0 +1,93 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "posts"
+    label: "Videos"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{fields.movie_name}}"
+    identifier_field: "movie_name"
+    search_fields: ["movie_name", "title", "description", "category"]
+    display_type: "grid"
+    publish: true
+    sortable_fields: ["date", "movie_name"]
+    view_filters:
+      - label: "Featured"
+        field: "featured"
+        pattern: true
+    view_groups:
+      - label: "Category"
+        field: "category"
+    limit: 20
+    fields:
+      - { label: "Title (for URL)", name: "title", widget: "string" }
+      - { label: "Movie Name (display name)", name: "movie_name", widget: "string" }
+      - { label: "Video URL", name: "video_url", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Category", name: "category", widget: "string", default: "Other", required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+
+  - name: "series"
+    label: "Series"
+    folder: "_series"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{fields.series_name}}"
+    identifier_field: "series_name"
+    search_fields: ["series_name", "title", "description", "category"]
+    display_type: "grid"
+    publish: true
+    sortable_fields: ["date", "series_name"]
+    view_groups:
+      - label: "Category"
+        field: "category"
+    limit: 20
+    fields:
+      - { label: "Title (for URL)", name: "title", widget: "string" }
+      - { label: "Series Name (display name)", name: "series_name", widget: "string" }
+      - label: "Seasons"
+        name: "seasons"
+        widget: "list"
+        summary: "SEASON {{fields.season_number}}"
+        label_singular: "Season"
+        add_to_top: false
+        fields:
+          - { label: "Season Number", name: "season_number", widget: "number", value_type: "int", min: 1, hint: "Auto-increments from previous season" }
+          - label: "Episodes"
+            name: "episodes"
+            widget: "list"
+            summary: "Episode {{fields.episode_number}} - {{fields.episode_title}}"
+            label_singular: "Episode"
+            add_to_top: false
+            fields:
+              - { label: "Episode Number", name: "episode_number", widget: "number", value_type: "int", min: 1, hint: "Auto-increments from previous episode" }
+              - { label: "Video URL", name: "video_url", widget: "string" }
+              - { label: "Episode Title", name: "episode_title", widget: "string", required: false }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Category", name: "category", widget: "string", default: "Other", required: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Site Configuration"
+        name: "config"
+        file: "_data/site.yml"
+        fields:
+          - {label: "Site Title", name: "title", widget: "string", default: "Shal Kyie Yoteshin"}
+          - {label: "Site Description", name: "description", widget: "text"}
+          - {label: "Contact Email", name: "email", widget: "string", required: false}
+          - {label: "Auto-play Videos by Default", name: "autoplay_default", widget: "boolean", default: false}
+
+# Note: Duplicates Checker is available at /admin/duplicates.html
+# This tool scans all published content for duplicate titles (URLs) and displays them for easy fixing

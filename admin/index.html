@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Content Manager</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    #duplicates-checker-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    #duplicates-checker-btn.visible {
+      display: flex;
+    }
+
+    #duplicates-checker-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+    }
+
+    #duplicates-checker-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Duplicates Checker Button -->
+  <button id="duplicates-checker-btn" title="Check for duplicate content titles">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.35-4.35"></path>
+      <path d="M11 8v6m-3-3h6"></path>
+    </svg>
+    Duplicates
+  </button>
+
+  <!-- Include the script that builds the page and powers Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    // Duplicates Checker button functionality
+    const duplicatesBtn = document.getElementById('duplicates-checker-btn');
+    
+    duplicatesBtn.addEventListener('click', function() {
+      window.open('/admin/duplicates.html', '_blank');
+    });
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        } else {
+          // User is already logged in
+          duplicatesBtn.classList.add('visible');
+        }
+      });
+
+      window.netlifyIdentity.on("login", user => {
+        console.log("User logged in", user);
+        localStorage.setItem('netlifyUser', JSON.stringify(user));
+        // Show button when user logs in
+        duplicatesBtn.classList.add('visible');
+      });
+
+      setInterval(() => {
+        if (window.netlifyIdentity.currentUser()) {
+          window.netlifyIdentity.refresh();
+        }
+      }, 300000);
+    }
+  </script>
+</body>
+</html>

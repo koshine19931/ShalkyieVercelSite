@@ -1,0 +1,17 @@
+[
+  {
+    "type": "video",
+    "title": "SK-SAMPLE1",
+    "video_url": "https://ia600908.us.archive.org/1/items/SKmoviez/SK-2B5672.mp4",
+    "description": "Sample video post created via CMS",
+    "date": "2025-01-15T12:00:00.000Z",
+    "featured": true,
+    "category": "Action",
+    "tags": [
+      "sample",
+      "demo",
+      "test"
+    ],
+    "generated_at": "2025-10-30T21:22:35.865Z"
+  }
+]

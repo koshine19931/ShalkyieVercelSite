@@ -1,0 +1,40 @@
+---
+title: SK-BB1567
+series_name: Breaking Bad
+seasons:
+  - season_number: 1
+    episodes:
+      - episode_number: 1
+        video_url: https://ia600908.us.archive.org/1/items/SKmoviez/SK-2B5672.mp4
+        episode_title: Pilot
+      - episode_number: 2
+        video_url: https://ia600908.us.archive.org/1/items/SKmoviez/SK-2B5672.mp4
+        episode_title: Cat's in the Bag
+      - episode_number: 3
+        video_url: https://ia600908.us.archive.org/1/items/SKmoviez/SK-2B5672.mp4
+        episode_title: And the Bag's in the River
+  - season_number: 2
+    episodes:
+      - episode_number: 1
+        video_url: https://ia600908.us.archive.org/1/items/SKmoviez/SK-2B5672.mp4
+        episode_title: Seven Thirty-Seven
+      - episode_number: 2
+        video_url: https://ia600908.us.archive.org/1/items/SKmoviez/SK-2B5672.mp4
+        episode_title: Grilled
+  - season_number: 3
+    episodes:
+      - episode_number: 1
+        video_url: https://ia600908.us.archive.org/1/items/SKmoviez/SK-2B5672.mp4
+        episode_title: No Mas
+      - episode_number: 2
+        video_url: https://ia600908.us.archive.org/1/items/SKmoviez/SK-2B5672.mp4
+        episode_title: Caballo Sin Nombre
+description: Sample series demonstrating the new series functionality with multiple seasons
+date: 2025-01-20T12:00:00.000Z
+featured: true
+category: Drama
+tags:
+  - series
+  - demo
+  - drama
+---

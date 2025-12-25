@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duplicates Checker - Decap CMS</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .status {
+            margin-bottom: 30px;
+            padding: 16px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .status.loading {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status.no-duplicates {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status.has-duplicates {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .duplicate-group {
+            margin-bottom: 24px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .duplicate-group-header {
+            background: #fff3e0;
+            padding: 16px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .duplicate-group-header h3 {
+            font-size: 16px;
+            color: #e65100;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .count-badge {
+            background: #e65100;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .duplicate-items {
+            background: #fafafa;
+        }
+
+        .duplicate-item {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            transition: background 0.2s;
+        }
+
+        .duplicate-item:last-child {
+            border-bottom: none;
+        }
+
+        .duplicate-item:hover {
+            background: #f5f5f5;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-type {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .item-type.video {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .item-type.series {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .item-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .item-details {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .item-title {
+            font-size: 12px;
+            color: #999;
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-btn {
+            padding: 8px 14px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .edit-btn:hover {
+            background: #5568d3;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #999;
+            font-size: 15px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-search-plus"></i> Duplicates Checker</h1>
+            <a href="/" class="back-btn"><i class="fas fa-arrow-left"></i> Back to CMS</a>
+        </div>
+
+        <div class="content">
+            <div id="status" class="status loading">
+                <i class="fas fa-spinner fa-spin"></i> Scanning for duplicates...
+            </div>
+
+            <div id="error" class="error" style="display: none;"></div>
+
+            <div id="stats" class="stats" style="display: none;"></div>
+
+            <div id="duplicates-container"></div>
+        </div>
+    </div>
+
+    <script>
+        async function checkDuplicates() {
+            try {
+                // Fetch both posts and series data
+                const postsResponse = await fetch('/posts.json?v=' + Date.now());
+                const seriesResponse = await fetch('/series.json?v=' + Date.now());
+
+                if (!postsResponse.ok || !seriesResponse.ok) {
+                    throw new Error('Failed to load content data');
+                }
+
+                const posts = await postsResponse.json();
+                const series = await seriesResponse.json();
+
+                // Combine all content
+                const allContent = [...(posts || []), ...(series || [])];
+
+                // Find duplicates by title
+                const titleMap = {};
+                const duplicates = {};
+
+                allContent.forEach(item => {
+                    const title = item.title;
+                    if (!titleMap[title]) {
+                        titleMap[title] = [];
+                    }
+                    titleMap[title].push(item);
+                });
+
+                // Filter to only show duplicates
+                Object.entries(titleMap).forEach(([title, items]) => {
+                    if (items.length > 1) {
+                        duplicates[title] = items;
+                    }
+                });
+
+                displayResults(duplicates, posts.length, series.length);
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function displayResults(duplicates, postsCount, seriesCount) {
+            const statusEl = document.getElementById('status');
+            const statsEl = document.getElementById('stats');
+            const containerEl = document.getElementById('duplicates-container');
+
+            const duplicateCount = Object.keys(duplicates).length;
+
+            // Update stats
+            statsEl.innerHTML = `
+                <div class="stat-card">
+                    <h4>Total Videos</h4>
+                    <div class="number">${postsCount}</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Series</h4>
+                    <div class="number">${seriesCount}</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Duplicate Groups</h4>
+                    <div class="number">${duplicateCount}</div>
+                </div>
+            `;
+            statsEl.style.display = 'grid';
+
+            if (duplicateCount === 0) {
+                statusEl.className = 'status no-duplicates';
+                statusEl.innerHTML = '<i class="fas fa-check-circle"></i> Perfect! No duplicate titles found.';
+                containerEl.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-thumbs-up"></i>
+                        <h2>All Clear!</h2>
+                        <p>Your content has no duplicate titles. Keep it up!</p>
+                    </div>
+                `;
+            } else {
+                statusEl.className = 'status has-duplicates';
+                statusEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Found ${duplicateCount} duplicate title group(s). Please fix these.`;
+
+                // Display duplicates
+                let html = '';
+                Object.entries(duplicates).forEach(([title, items]) => {
+                    html += `
+                        <div class="duplicate-group">
+                            <div class="duplicate-group-header">
+                                <h3>
+                                    <i class="fas fa-copy"></i>
+                                    "${title}"
+                                    <span class="count-badge">${items.length} items</span>
+                                </h3>
+                            </div>
+                            <div class="duplicate-items">
+                                ${items.map(item => createItemHTML(item, title)).join('')}
+                            </div>
+                        </div>
+                    `;
+                });
+                containerEl.innerHTML = html;
+            }
+        }
+
+        function createItemHTML(item, title) {
+            const isVideo = item.type === 'video';
+            const displayName = isVideo ? item.movie_name : item.series_name;
+            const collection = isVideo ? 'posts' : 'series';
+            const date = new Date(item.date).toLocaleDateString();
+
+            // Create slug from display name (movie_name or series_name)
+            // This matches how Decap CMS creates entry names
+            const slug = displayName
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+
+            // Construct the entry name from date and slug
+            // Format: YYYY-MM-DD-slug
+            const dateObj = new Date(item.date);
+            const year = dateObj.getUTCFullYear();
+            const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getUTCDate()).padStart(2, '0');
+            const entryName = `${year}-${month}-${day}-${slug}`;
+
+            // Create proper edit link for Decap CMS editor
+            const editUrl = `/admin/#/collections/${collection}/entries/${entryName}`;
+
+            return `
+                <div class="duplicate-item">
+                    <div class="item-info">
+                        <div class="item-type ${isVideo ? 'video' : 'series'}">
+                            <i class="fas ${isVideo ? 'fa-play-circle' : 'fa-tv'}"></i>
+                            ${isVideo ? 'VIDEO' : 'SERIES'}
+                        </div>
+                        <div class="item-name">${displayName}</div>
+                        <div class="item-details">
+                            <i class="fas fa-calendar"></i> ${date}
+                        </div>
+                        <div class="item-title">
+                            <i class="fas fa-hashtag"></i> ${title}
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="edit-btn" onclick="openEditPage('${editUrl}')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            const statusEl = document.getElementById('status');
+            const errorEl = document.getElementById('error');
+
+            statusEl.className = 'status';
+            statusEl.style.display = 'none';
+
+            errorEl.textContent = '❌ Error: ' + message;
+            errorEl.style.display = 'block';
+        }
+
+        function openEditPage(editUrl) {
+            // Open the admin edit page in the same window
+            window.location.href = editUrl;
+        }
+
+        // Run on page load
+        window.addEventListener('load', checkDuplicates);
+
+        // Auto-refresh every 30 seconds
+        setInterval(checkDuplicates, 30000);
+    </script>
+</body>
+</html>

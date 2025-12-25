@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shal Kyie Yoteshin</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="style.css?v=1.0.3" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+    <div class="ad-wrapper">
+        <div class="ad-scale-wrapper">
+            <div class="ad-scale">
+                <div class="ad-container">
+                    <div style="display: flex; justify-content: center;">
+                        <div style="width: 100%; max-width: 800px; text-align: center;">
+                            <a href="https://www.burmahub.site" target="_blank">
+                                <img alt="Ad H1" src="https://ia600809.us.archive.org/3/items/video_2025-02-05_20-05-22/H1.gif" style="width: 100%; height: auto; border-radius: 6px;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ad-scale-wrapper">
+            <div class="ad-scale">
+                <div class="ad-container">
+                    <div style="display: flex; justify-content: center;">
+                        <div style="width: 100%; max-width: 800px; text-align: center;">
+                            <a href="https://www.burmahub.site" target="_blank">
+                                <img alt="Ad H2" src="https://ia600809.us.archive.org/3/items/video_2025-02-05_20-05-22/H2.gif" style="width: 100%; height: auto; border-radius: 6px;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="controls-section" class="controls-section"></div>
+
+    <main class="main-content">
+        <div id="posts-container" class="posts-container"></div>
+    </main>
+
+    <div id="floating-ad">
+        <a href="https://www.burmahub.site" target="_blank">
+            <img alt="Floating Ad" src="https://ia600809.us.archive.org/3/items/video_2025-02-05_20-05-22/H1.gif">
+        </a>
+    </div>
+
+    <div class="floating-ad-spacer"></div>
+
+    <script src="posts-data.js?v=1.0.3"></script>
+    <script src="script.js?v=1.0.3"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+</body>
+</html>
