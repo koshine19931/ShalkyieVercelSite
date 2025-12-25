@@ -1,5 +1,5 @@
 backend:
-  name: git-gateway
+  name: github
   repo: koshine19931/ShalkyieVercelSite
   branch: main
   base_url: ""
