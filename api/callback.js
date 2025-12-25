@@ -1,18 +1,30 @@
-import axios from 'axios';
+const axios = require('axios');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   const { code } = req.query;
-  const { host } = req.headers;
+  
+  // 1. Check if Secrets exist
+  if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
+    return res.status(500).send("Error: Missing GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET in Vercel settings.");
+  }
+
   try {
+    // 2. Exchange Code for Token
     const response = await axios.post('https://github.com/login/oauth/access_token', {
       client_id: process.env.GITHUB_CLIENT_ID,
       client_secret: process.env.GITHUB_CLIENT_SECRET,
       code,
     }, {
-      headers: { Accept: 'application/json' }
+      headers: { Accept: 'application/json' },
     });
 
     const { access_token } = response.data;
+
+    if (!access_token) {
+        return res.status(400).send("GitHub Error: Could not get access token. Check your Client Secret.");
+    }
+
+    // 3. Send Token back to CMS
     const script = `
       <script>
         (function() {
@@ -29,6 +41,7 @@ export default async function handler(req, res) {
     `;
     res.send(script);
   } catch (error) {
+    console.error(error);
     res.status(500).send(error.message);
   }
-}
+};
