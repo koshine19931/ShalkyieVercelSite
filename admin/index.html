@@ -20,7 +20,7 @@
       font-weight: 600;
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-      display: none; /* HIDDEN BY DEFAULT (as you requested) */
+      display: none; /* HIDDEN BY DEFAULT */
       align-items: center;
       gap: 8px;
       transition: all 0.3s ease;
@@ -28,7 +28,7 @@
     }
 
     #duplicates-checker-btn.visible {
-      display: flex; /* Only shows when 'visible' class is added */
+      display: flex;
     }
 
     #duplicates-checker-btn:hover {
@@ -52,49 +52,52 @@
     Duplicates
   </button>
 
-  <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+
   <script>
-    // 1. SETUP BUTTON LOGIC
+    window.CMS_MANUAL_INIT = true;
+  </script>
+
+  <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+
+  <script>
+    // --- PART A: Manually Load Config & Start CMS ---
+    // We fetch /admin/config.yml explicitly to avoid 404s
+    fetch('/admin/config.yml')
+      .then(response => {
+        if (!response.ok) throw new Error('Config file not found at /admin/config.yml');
+        return response.text();
+      })
+      .then(configYaml => {
+        const config = jsyaml.load(configYaml);
+        CMS.init({ config: config });
+        console.log("CMS Initialized Manually");
+      })
+      .catch(error => {
+        console.error("Critical CMS Error:", error);
+        document.body.innerHTML += `<p style="color:red; text-align:center; margin-top:50px">Error loading Config: ${error.message}</p>`;
+      });
+
+    // --- PART B: Button Logic (Hidden until login) ---
     const duplicatesBtn = document.getElementById('duplicates-checker-btn');
     
     duplicatesBtn.addEventListener('click', function() {
       window.open('/admin/duplicates.html', '_blank');
     });
 
-    // 2. NEW LOGIN CHECK (Replaces Netlify Identity)
-    // We check LocalStorage because Decap CMS saves the user token there.
     function checkLoginStatus() {
+      // Decap CMS saves the user in localStorage under 'decap-cms-user'
       const user = localStorage.getItem('decap-cms-user'); 
       if (user) {
-        duplicatesBtn.classList.add('visible'); // Show button if user exists
+        duplicatesBtn.classList.add('visible');
       } else {
         duplicatesBtn.classList.remove('visible');
       }
     }
 
-    // Check immediately, and then check every 2 seconds (in case login happens)
+    // Check immediately and then every 2 seconds
     checkLoginStatus();
     setInterval(checkLoginStatus, 2000);
-
-    // 3. FIX THE CONFIG 404 ERROR
-    // This forces the CMS to load the config from the specific path
-    fetch('/admin/config.yml')
-      .then(response => {
-        if (!response.ok) throw new Error('Config file not found');
-        return response.text();
-      })
-      .then(configYaml => {
-        // Manually initialize CMS with the fetched config
-        // This bypasses the "relative path" bug
-        CMS.init({ config: jsyaml.load(configYaml) });
-      })
-      .catch(error => {
-        console.warn("Could not auto-load config via fetch, falling back to default...", error);
-        // If fetch fails, we let CMS try its default way (just in case)
-      });
   </script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
 </body>
 </html>
