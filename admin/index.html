@@ -61,8 +61,7 @@
   <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
 
   <script>
-    // --- PART A: Manually Load Config & Start CMS ---
-    // We fetch /admin/config.yml explicitly to avoid 404s
+    // Fetch config and force correct URLs
     fetch('/admin/config.yml')
       .then(response => {
         if (!response.ok) throw new Error('Config file not found at /admin/config.yml');
@@ -70,23 +69,30 @@
       })
       .then(configYaml => {
         const config = jsyaml.load(configYaml);
+        
+        // --- THE CRITICAL FIX ---
+        // We force the base_url to be THIS site (Vercel), not Netlify.
+        // We also ensure the auth_endpoint is correct.
+        config.backend.base_url = window.location.origin; // e.g., https://shalkyie.vercel.app
+        config.backend.auth_endpoint = "api/auth";        // Points to your local API
+        
+        console.log("Config patched with Vercel URL:", config.backend.base_url);
+
+        // Start CMS with the patched config
         CMS.init({ config: config });
-        console.log("CMS Initialized Manually");
       })
       .catch(error => {
         console.error("Critical CMS Error:", error);
-        document.body.innerHTML += `<p style="color:red; text-align:center; margin-top:50px">Error loading Config: ${error.message}</p>`;
+        document.body.innerHTML += `<p style="color:red; text-align:center; margin-top:50px">Error: ${error.message}</p>`;
       });
 
-    // --- PART B: Button Logic (Hidden until login) ---
+    // --- Button Logic (Hidden until login) ---
     const duplicatesBtn = document.getElementById('duplicates-checker-btn');
-    
     duplicatesBtn.addEventListener('click', function() {
       window.open('/admin/duplicates.html', '_blank');
     });
 
     function checkLoginStatus() {
-      // Decap CMS saves the user in localStorage under 'decap-cms-user'
       const user = localStorage.getItem('decap-cms-user'); 
       if (user) {
         duplicatesBtn.classList.add('visible');
@@ -94,8 +100,6 @@
         duplicatesBtn.classList.remove('visible');
       }
     }
-
-    // Check immediately and then every 2 seconds
     checkLoginStatus();
     setInterval(checkLoginStatus, 2000);
   </script>
