@@ -1,0 +1,70 @@
+# CloudCannon Configuration
+collections_config:
+  posts:
+    path: _posts
+    output: true
+    name: Videos
+    icon: local_movies
+    fields:
+      - name: movie_name
+        label: Movie Name (Display)
+        type: text
+      - name: title
+        label: Title (URL Slug)
+        type: text
+      - name: video_url
+        label: Video URL
+        type: text
+      - name: description
+        label: Description
+        type: textarea
+      - name: featured
+        label: Featured
+        type: boolean
+      - name: category
+        label: Category
+        type: select
+        options:
+          - Action
+          - Comedy
+          - Drama
+          - Horror
+          - Romance
+          - Thriller
+          - Sci-Fi
+          - Other
+      - name: tags
+        label: Tags
+        type: list
+
+  series:
+    path: _series
+    output: true
+    name: Series
+    icon: live_tv
+    fields:
+      - name: series_name
+        label: Series Name
+        type: text
+      - name: seasons
+        label: Seasons
+        type: list
+        fields:
+          - name: season_number
+            type: number
+          - name: episodes
+            type: list
+            fields:
+               - name: episode_number
+                 type: number
+               - name: video_url
+                 type: text
+               - name: episode_title
+                 type: text
+
+# Tell CloudCannon how to build your site for the preview
+source: .
+build:
+  install_command: npm install
+  build_command: node generate-posts.js
+  output_path: .
