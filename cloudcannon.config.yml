@@ -10,7 +10,6 @@ collections_config:
     sort_key: date
     sort_options:
       order: desc
-
     preview:
       text:
         key: movie_name
@@ -18,37 +17,29 @@ collections_config:
         key: date
       icon:
         icon: movie
-
     fields:
       - name: movie_name
         label: Movie Name (Display)
         type: text
-        
       - name: title
         label: Title (URL Slug)
         type: text
         comment: "Do not use spaces. Example: SK-12345"
-        
-      # DATE IS NOW AUTO (Managed by "NOW")
       - name: date
         label: Publish Date
         type: datetime
         instance_value: NOW
         options:
           timezone: "Asia/Yangon"
-        
       - name: video_url
         label: Video URL
         type: text
-        
       - name: description
         label: Description
         type: textarea
-        
       - name: featured
         label: Featured
         type: boolean
-        
       - name: category
         label: Category
         type: select
@@ -63,24 +54,21 @@ collections_config:
             - Sci-Fi
             - Other
           allow_empty: false
-          
-      # --- FIX FOR TAGS ---
       - name: tags
         label: Tags
         type: multiselect
         options:
-          allow_create: true # Allows typing new tags
-          values:            # Must not be empty!
+          allow_create: true
+          values:
             - New
             - Popular
             - 1080p
-      # --------------------
-
     schemas:
       default:
         path: schemas/post.md
         name: Video Post
 
+  # --- SERIES CONFIGURATION STARTS HERE ---
   series:
     path: _series
     output: true
@@ -97,12 +85,57 @@ collections_config:
         key: date
       icon:
         icon: tv
-    
-    # Simple fix for Series seasons if you use them later
+
+    schemas:
+      default:
+        path: schemas/series.md  # <--- We need to create this file next!
+        name: New Series
+
     fields:
+      - name: series_name
+        label: Series Name
+        type: text
+      
+      - name: date
+        label: Publish Date
+        type: datetime
+        instance_value: NOW
+        options:
+          timezone: "Asia/Yangon"
+          
+      # This is the complex part: A list of Seasons
       - name: seasons
         label: Seasons
         type: array
+        structures:
+          - name: Season
+            values:
+              season_number: 1
+              episodes: []
+            fields:
+              - name: season_number
+                label: Season Number
+                type: number
+              # Inside a Season: A list of Episodes
+              - name: episodes
+                label: Episodes
+                type: array
+                structures:
+                  - name: Episode
+                    values:
+                      episode_number: 1
+                      episode_title: ""
+                      video_url: ""
+                    fields:
+                       - name: episode_number
+                         label: Episode #
+                         type: number
+                       - name: episode_title
+                         label: Title
+                         type: text
+                       - name: video_url
+                         label: Video URL
+                         type: text
 
 # Build Settings
 build:
