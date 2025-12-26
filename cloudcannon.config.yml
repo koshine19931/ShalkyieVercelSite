@@ -79,6 +79,13 @@ _inputs:
     options:
       item_type: object
 
-# Pagination via Pagebreak
+# Ensure CloudCannon sees the site as a static site
+# and correctly handles the build.
 build:
   command: npx @pagebreak/cli -s . -o .
+
+# Add base URL and data to help CloudCannon discovery
+# This helps when the CMS shows "Empty"
+base_url: /
+site_data:
+  title: Shal Kyie Yoteshin
