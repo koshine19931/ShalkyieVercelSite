@@ -62,13 +62,12 @@ collections_config:
           values:
             - New
             - Popular
-            - 1080p
+
     schemas:
       default:
         path: schemas/post.md
         name: Video Post
 
-  # --- SERIES CONFIGURATION STARTS HERE ---
   series:
     path: _series
     output: true
@@ -88,7 +87,7 @@ collections_config:
 
     schemas:
       default:
-        path: schemas/series.md  # <--- We need to create this file next!
+        path: schemas/series.md
         name: New Series
 
     fields:
@@ -102,43 +101,44 @@ collections_config:
         instance_value: NOW
         options:
           timezone: "Asia/Yangon"
-          
-      # This is the complex part: A list of Seasons
+      
+      # --- FIX FOR SEASONS ---
       - name: seasons
         label: Seasons
         type: array
+        # This 'structures' block creates the "Add Season" button
         structures:
           - name: Season
+            label: Add Season
+            icon: folder
+            # This 'values' block defines what a new season looks like by default
             values:
               season_number: 1
               episodes: []
+            # This defines the fields INSIDE a season
             fields:
               - name: season_number
                 label: Season Number
                 type: number
-              # Inside a Season: A list of Episodes
               - name: episodes
                 label: Episodes
                 type: array
+                # This 'structures' block creates the "Add Episode" button
                 structures:
                   - name: Episode
+                    label: Add Episode
+                    icon: play_circle
                     values:
                       episode_number: 1
-                      episode_title: ""
+                      episode_title: "New Episode"
                       video_url: ""
                     fields:
-                       - name: episode_number
-                         label: Episode #
-                         type: number
-                       - name: episode_title
-                         label: Title
-                         type: text
-                       - name: video_url
-                         label: Video URL
-                         type: text
-
-# Build Settings
-build:
-  install_command: npm install
-  build_command: node generate-posts.js
-  output_path: .
+                      - name: episode_number
+                        label: Episode No.
+                        type: number
+                      - name: episode_title
+                        label: Title
+                        type: text
+                      - name: video_url
+                        label: Video URL
+                        type: text
