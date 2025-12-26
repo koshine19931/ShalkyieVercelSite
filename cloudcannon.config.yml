@@ -1,7 +1,7 @@
 # CloudCannon Configuration
 source: .
 
-# 1. Global Field Definitions (The "Schema")
+# 1. Global Field Definitions
 _inputs:
   movie_name:
     type: text
@@ -9,6 +9,7 @@ _inputs:
   title:
     type: text
     label: Title (URL Slug)
+    comment: "Do not use spaces. Example: SK-12345"
   video_url:
     type: text
     label: Video URL
@@ -49,7 +50,13 @@ collections_config:
     sort_key: date
     sort_options:
       order: desc
-    # This tells CloudCannon: "Use the inputs defined above, but don't crash if extra stuff exists"
+    
+    # --- THIS FIXES THE LIST VIEW ---
+    summary:
+      title: movie_name
+      subtitle: date
+    # --------------------------------
+    
     schemas:
       default:
         path: schemas/post.md
@@ -63,6 +70,12 @@ collections_config:
     sort_key: date
     sort_options:
       order: desc
+    
+    # --- THIS FIXES THE SERIES LIST ---
+    summary:
+      title: series_name
+      subtitle: date
+    # ----------------------------------
 
 # 3. Build Settings
 build:
