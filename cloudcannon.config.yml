@@ -1,4 +1,4 @@
-source: VercelSite
+source: .
 paths:
   uploads: assets/uploads
   static: ""
@@ -85,11 +85,9 @@ _inputs:
     options:
       item_type: object
 
-# Build configuration
 build:
   command: npx @pagebreak/cli -s . -o .
 
-# Basic site settings for CloudCannon
 base_url: /
 site_data:
   title: Shal Kyie Yoteshin
