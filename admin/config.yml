@@ -27,7 +27,7 @@ collections:
     view_groups:
       - label: "Category"
         field: "category"
-    limit: 20
+
     fields:
       - { label: "Title (for URL)", name: "title", widget: "string" }
       - { label: "Movie Name (display name)", name: "movie_name", widget: "string" }
