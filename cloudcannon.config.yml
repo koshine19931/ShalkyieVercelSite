@@ -1,51 +1,14 @@
+# CloudCannon Configuration
 source: .
-paths:
-  uploads: assets/uploads
-  static: ""
 
-collections_config:
-  posts:
-    path: _posts
-    name: Videos
-    icon: videocam
-    url: /posts/[slug]/
-    output: true
-    preview:
-      text:
-        - key: movie_name
-      subtext:
-        - key: category
-      icon: local_movies
-
-  series:
-    path: _series
-    name: Series
-    icon: tv
-    url: /series/[slug]/
-    output: true
-    preview:
-      text:
-        - key: series_name
-      subtext:
-        - key: category
-      icon: dvr
-
-  data:
-    path: _data
-    name: Data
-    icon: settings
-    output: false
-
+# 1. Global Field Definitions (The "Schema")
 _inputs:
-  title:
-    type: text
-    label: Slug Title
   movie_name:
     type: text
-    label: Movie Name
-  series_name:
+    label: Movie Name (Display)
+  title:
     type: text
-    label: Series Name
+    label: Title (URL Slug)
   video_url:
     type: text
     label: Video URL
@@ -56,38 +19,53 @@ _inputs:
     type: datetime
     label: Publish Date
   featured:
-    type: checkbox
+    type: boolean
     label: Featured
   category:
     type: select
+    label: Category
     options:
       values:
-        - Movies
-        - Drama
         - Action
         - Comedy
+        - Drama
         - Horror
+        - Romance
+        - Thriller
         - Sci-Fi
         - Other
+      allow_empty: true
   tags:
-    type: array
+    type: list
     label: Tags
-  
-  seasons:
-    type: array
-    label: Seasons
-    options:
-      item_type: object
-  
-  episodes:
-    type: array
-    label: Episodes
-    options:
-      item_type: object
 
+# 2. Collections
+collections_config:
+  posts:
+    path: _posts
+    output: true
+    name: Videos
+    icon: local_movies
+    sort_key: date
+    sort_options:
+      order: desc
+    # This tells CloudCannon: "Use the inputs defined above, but don't crash if extra stuff exists"
+    schemas:
+      default:
+        path: schemas/post.md
+        name: Video Post
+        
+  series:
+    path: _series
+    output: true
+    name: Series
+    icon: live_tv
+    sort_key: date
+    sort_options:
+      order: desc
+
+# 3. Build Settings
 build:
-  command: npx @pagebreak/cli -s . -o .
-
-base_url: /
-site_data:
-  title: Shal Kyie Yoteshin
+  install_command: npm install
+  build_command: node generate-posts.js
+  output_path: .
