@@ -1,69 +1,70 @@
-source: VercelSite
-paths:
-  uploads: assets/uploads
-  static: ""
-
+# CloudCannon Configuration
 collections_config:
   posts:
     path: _posts
-    name: Videos
-    icon: videocam
-    url: /posts/[slug]/
     output: true
-    preview:
-      text:
-        - key: movie_name
-      subtext:
-        - key: category
-      icon: local_movies
+    name: Videos
+    icon: local_movies
+    fields:
+      - name: movie_name
+        label: Movie Name (Display)
+        type: text
+      - name: title
+        label: Title (URL Slug)
+        type: text
+      - name: video_url
+        label: Video URL
+        type: text
+      - name: description
+        label: Description
+        type: textarea
+      - name: featured
+        label: Featured
+        type: boolean
+      - name: category
+        label: Category
+        type: select
+        options:
+          - Action
+          - Comedy
+          - Drama
+          - Horror
+          - Romance
+          - Thriller
+          - Sci-Fi
+          - Other
+      - name: tags
+        label: Tags
+        type: list
 
   series:
     path: _series
-    name: Series
-    icon: tv
-    url: /series/[slug]/
     output: true
-    preview:
-      text:
-        - key: series_name
-      subtext:
-        - key: category
-      icon: dvr
+    name: Series
+    icon: live_tv
+    fields:
+      - name: series_name
+        label: Series Name
+        type: text
+      - name: seasons
+        label: Seasons
+        type: list
+        fields:
+          - name: season_number
+            type: number
+          - name: episodes
+            type: list
+            fields:
+               - name: episode_number
+                 type: number
+               - name: video_url
+                 type: text
+               - name: episode_title
+                 type: text
 
-_inputs:
-  movie_name:
-    type: text
-    label: Movie Name
-  series_name:
-    type: text
-    label: Series Name
-  video_url:
-    type: text
-    label: Video URL
-  date:
-    type: datetime
-    label: Publish Date
-  featured:
-    type: checkbox
-    label: Featured
-  category:
-    type: select
-    options:
-      values:
-        - Action
-        - Comedy
-        - Drama
-        - Horror
-        - Sci-Fi
-        - Other
-  tags:
-    type: array
-    label: Tags
-    options:
-      item_type: text
-
-# Pagination via Pagebreak
-# Note: To enable pagination, add data-pagebreak="10" to your listing containers
-# and run: npx @pagebreak/cli -s _site -o _site
+# Tell CloudCannon how to build your site for the preview
+source: .
 build:
-  command: npx @pagebreak/cli -s . -o .
+  install_command: npm install
+  build_command: node generate-posts.js
+  output_path: .
