@@ -51,11 +51,16 @@ collections_config:
     sort_options:
       order: desc
     
-    # --- THIS FIXES THE LIST VIEW ---
-    summary:
-      title: movie_name
-      subtitle: date
-    # --------------------------------
+    # --- THIS IS THE FIX ---
+    # We use 'preview' to tell CloudCannon exactly what to show on the card
+    preview:
+      text:
+        key: movie_name
+      subtext:
+        key: date
+      icon:
+        icon: movie
+    # -----------------------
     
     schemas:
       default:
@@ -71,11 +76,15 @@ collections_config:
     sort_options:
       order: desc
     
-    # --- THIS FIXES THE SERIES LIST ---
-    summary:
-      title: series_name
-      subtitle: date
-    # ----------------------------------
+    # --- FIX FOR SERIES TOO ---
+    preview:
+      text:
+        key: series_name
+      subtext:
+        key: date
+      icon:
+        icon: tv
+    # --------------------------
 
 # 3. Build Settings
 build:
