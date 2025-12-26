@@ -29,12 +29,13 @@ collections_config:
         type: text
         comment: "Do not use spaces. Example: SK-12345"
         
+      # DATE IS NOW AUTO (Managed by "NOW")
       - name: date
         label: Publish Date
         type: datetime
-        instance_value: NOW  # <--- This sets it to "Right Now"
+        instance_value: NOW
         options:
-          timezone: "Asia/Yangon" # <--- This makes it Myanmar Time
+          timezone: "Asia/Yangon"
         
       - name: video_url
         label: Video URL
@@ -63,12 +64,17 @@ collections_config:
             - Other
           allow_empty: false
           
+      # --- FIX FOR TAGS ---
       - name: tags
         label: Tags
         type: multiselect
         options:
-          allow_create: true
-          values: []
+          allow_create: true # Allows typing new tags
+          values:            # Must not be empty!
+            - New
+            - Popular
+            - 1080p
+      # --------------------
 
     schemas:
       default:
@@ -91,6 +97,12 @@ collections_config:
         key: date
       icon:
         icon: tv
+    
+    # Simple fix for Series seasons if you use them later
+    fields:
+      - name: seasons
+        label: Seasons
+        type: array
 
 # Build Settings
 build:
