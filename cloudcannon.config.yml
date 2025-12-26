@@ -1,48 +1,59 @@
 # CloudCannon Configuration
+source: .
+
+# 1. Define the Global Inputs (How each field should look)
+_inputs:
+  movie_name:
+    type: text
+    label: Movie Name (Display)
+  title:
+    type: text
+    label: Title (URL Slug)
+  video_url:
+    type: text
+    label: Video URL
+  description:
+    type: textarea
+    label: Description
+  date:
+    type: datetime
+    label: Publish Date
+  featured:
+    type: boolean
+    label: Featured
+  category:
+    type: select
+    label: Category
+    options:
+      values:
+        - Action
+        - Comedy
+        - Drama
+        - Horror
+        - Romance
+        - Thriller
+        - Sci-Fi
+        - Other
+      allow_empty: true
+  tags:
+    type: list
+    label: Tags
+
+# 2. Define the Collections (Where the files are)
 collections_config:
   posts:
     path: _posts
     output: true
     name: Videos
     icon: local_movies
-    # Sort files by date (newest first) in the list
     sort_key: date
     sort_options:
       order: desc
-    fields:
-      - name: movie_name
-        label: Movie Name (Display)
-        type: text
-      - name: title
-        label: Title (URL Slug)
-        type: text
-      - name: date
-        label: Publish Date
-        type: datetime
-      - name: video_url
-        label: Video URL
-        type: text
-      - name: description
-        label: Description
-        type: textarea
-      - name: featured
-        label: Featured
-        type: boolean
-      - name: category
-        label: Category
-        type: select
-        options:
-          - Action
-          - Comedy
-          - Drama
-          - Horror
-          - Romance
-          - Thriller
-          - Sci-Fi
-          - Other
-      - name: tags
-        label: Tags
-        type: list
+    # This line forces CloudCannon to use the inputs defined above
+    schemas:
+      default:
+        path: schemas/post.md
+        name: Video Post
         
   series:
     path: _series
@@ -52,43 +63,8 @@ collections_config:
     sort_key: date
     sort_options:
       order: desc
-    fields:
-      - name: series_name
-        label: Series Name
-        type: text
-      - name: date
-        label: Publish Date
-        type: datetime
-      - name: seasons
-        label: Seasons
-        type: array
-        structures:
-          - name: Season
-            values:
-              season_number: 1
-              episodes: []
-            fields:
-              - name: season_number
-                label: Season Number
-                type: number
-              - name: episodes
-                label: Episodes
-                type: array
-                structures:
-                  - name: Episode
-                    values:
-                      episode_number: 1
-                      video_url: ""
-                      episode_title: ""
-                    fields:
-                       - name: episode_number
-                         type: number
-                       - name: video_url
-                         type: text
-                       - name: episode_title
-                         type: text
 
-source: .
+# 3. Build Settings
 build:
   install_command: npm install
   build_command: node generate-posts.js
