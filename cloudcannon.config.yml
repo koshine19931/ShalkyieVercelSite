@@ -1,14 +1,45 @@
-# CloudCannon Configuration
-source: .
+source: VercelSite
+paths:
+  uploads: assets/uploads
+  static: ""
 
-# 1. Define the Global Inputs (How each field should look)
+collections_config:
+  posts:
+    path: _posts
+    name: Videos
+    icon: videocam
+    url: /posts/[slug]/
+    output: true
+    preview:
+      text:
+        - key: movie_name
+      subtext:
+        - key: category
+      icon: local_movies
+
+  series:
+    path: _series
+    name: Series
+    icon: tv
+    url: /series/[slug]/
+    output: true
+    preview:
+      text:
+        - key: series_name
+      subtext:
+        - key: category
+      icon: dvr
+
 _inputs:
-  movie_name:
-    type: text
-    label: Movie Name (Display)
   title:
     type: text
-    label: Title (URL Slug)
+    label: Slug Title
+  movie_name:
+    type: text
+    label: Movie Name
+  series_name:
+    type: text
+    label: Series Name
   video_url:
     type: text
     label: Video URL
@@ -19,53 +50,35 @@ _inputs:
     type: datetime
     label: Publish Date
   featured:
-    type: boolean
+    type: checkbox
     label: Featured
   category:
     type: select
-    label: Category
     options:
       values:
+        - Movies
+        - Drama
         - Action
         - Comedy
-        - Drama
         - Horror
-        - Romance
-        - Thriller
         - Sci-Fi
         - Other
-      allow_empty: true
   tags:
-    type: list
+    type: array
     label: Tags
+  
+  seasons:
+    type: array
+    label: Seasons
+    options:
+      item_type: object
+  
+  episodes:
+    type: array
+    label: Episodes
+    options:
+      item_type: object
 
-# 2. Define the Collections (Where the files are)
-collections_config:
-  posts:
-    path: _posts
-    output: true
-    name: Videos
-    icon: local_movies
-    sort_key: date
-    sort_options:
-      order: desc
-    # This line forces CloudCannon to use the inputs defined above
-    schemas:
-      default:
-        path: schemas/post.md
-        name: Video Post
-        
-  series:
-    path: _series
-    output: true
-    name: Series
-    icon: live_tv
-    sort_key: date
-    sort_options:
-      order: desc
-
-# 3. Build Settings
+# Pagination via Pagebreak
 build:
-  install_command: npm install
-  build_command: node generate-posts.js
-  output_path: .
+  command: npx @pagebreak/cli -s . -o .
