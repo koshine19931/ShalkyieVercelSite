@@ -30,6 +30,12 @@ collections_config:
         - key: category
       icon: dvr
 
+  data:
+    path: _data
+    name: Data
+    icon: settings
+    output: false
+
 _inputs:
   title:
     type: text
@@ -79,13 +85,11 @@ _inputs:
     options:
       item_type: object
 
-# Ensure CloudCannon sees the site as a static site
-# and correctly handles the build.
+# Build configuration
 build:
   command: npx @pagebreak/cli -s . -o .
 
-# Add base URL and data to help CloudCannon discovery
-# This helps when the CMS shows "Empty"
+# Basic site settings for CloudCannon
 base_url: /
 site_data:
   title: Shal Kyie Yoteshin
