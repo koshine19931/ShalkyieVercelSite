@@ -44,7 +44,12 @@
     <div id="controls-section" class="controls-section"></div>
 
     <main class="main-content">
-        <div id="posts-container" class="posts-container"></div>
+        <div id="posts-container" class="posts-container" data-pagebreak="20"></div>
+        <div class="pagination-controls">
+            <a data-pagebreak-control="prev" class="pagination-btn">Previous</a>
+            <span class="page-info">Page <span data-pagebreak-control="page-num"></span> of <span data-pagebreak-control="total-pages"></span></span>
+            <a data-pagebreak-control="next" class="pagination-btn">Next</a>
+        </div>
     </main>
 
     <div id="floating-ad">
