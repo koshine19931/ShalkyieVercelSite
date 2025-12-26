@@ -5,6 +5,10 @@ collections_config:
     output: true
     name: Videos
     icon: local_movies
+    # Sort files by date (newest first) in the list
+    sort_key: date
+    sort_options:
+      order: desc
     fields:
       - name: movie_name
         label: Movie Name (Display)
@@ -12,6 +16,9 @@ collections_config:
       - name: title
         label: Title (URL Slug)
         type: text
+      - name: date
+        label: Publish Date
+        type: datetime
       - name: video_url
         label: Video URL
         type: text
@@ -36,33 +43,51 @@ collections_config:
       - name: tags
         label: Tags
         type: list
-
+        
   series:
     path: _series
     output: true
     name: Series
     icon: live_tv
+    sort_key: date
+    sort_options:
+      order: desc
     fields:
       - name: series_name
         label: Series Name
         type: text
+      - name: date
+        label: Publish Date
+        type: datetime
       - name: seasons
         label: Seasons
-        type: list
-        fields:
-          - name: season_number
-            type: number
-          - name: episodes
-            type: list
+        type: array
+        structures:
+          - name: Season
+            values:
+              season_number: 1
+              episodes: []
             fields:
-               - name: episode_number
-                 type: number
-               - name: video_url
-                 type: text
-               - name: episode_title
-                 type: text
+              - name: season_number
+                label: Season Number
+                type: number
+              - name: episodes
+                label: Episodes
+                type: array
+                structures:
+                  - name: Episode
+                    values:
+                      episode_number: 1
+                      video_url: ""
+                      episode_title: ""
+                    fields:
+                       - name: episode_number
+                         type: number
+                       - name: video_url
+                         type: text
+                       - name: episode_title
+                         type: text
 
-# Tell CloudCannon how to build your site for the preview
 source: .
 build:
   install_command: npm install
