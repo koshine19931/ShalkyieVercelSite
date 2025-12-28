@@ -85,6 +85,11 @@ collections_config:
       icon:
         icon: tv
 
+    schemas:
+      default:
+        path: schemas/series.md
+        name: New Series
+
     fields:
       - name: series_name
         label: Series Name
@@ -125,45 +130,32 @@ collections_config:
       - name: seasons
         label: Seasons
         type: array
-        options:
-          item_preview:
-            text:
-              - key: season_number
-                prefix: "Season "
-              - "Season"
         structures:
           - name: Season
-            label: Season
+            label: Add Season
             icon: folder
             values:
+              season_number: 1
               episodes: []
             fields:
               - name: season_number
                 label: Season Number
                 type: number
-                comment: "Leave blank to auto-calculate"
               - name: episodes
                 label: Episodes
                 type: array
-                options:
-                  item_preview:
-                    text:
-                      - key: episode_number
-                        prefix: "Episode "
-                      - key: episode_title
-                      - "Episode"
                 structures:
                   - name: Episode
-                    label: Episode
+                    label: Add Episode
                     icon: play_circle
                     values:
-                      episode_title: ""
+                      episode_number: 1
+                      episode_title: "New Episode"
                       video_url: ""
                     fields:
                       - name: episode_number
                         label: Episode No.
                         type: number
-                        comment: "Leave blank to auto-calculate"
                       - name: episode_title
                         label: Title
                         type: text
