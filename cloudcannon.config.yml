@@ -68,7 +68,7 @@ collections_config:
         path: schemas/post.md
         name: Video Post
 
-    series:
+  series:
     path: _series
     output: true
     name: Series
@@ -76,6 +76,7 @@ collections_config:
     sort_key: date
     sort_options:
       order: desc
+    
     preview:
       text:
         key: series_name
@@ -83,10 +84,12 @@ collections_config:
         key: date
       icon:
         icon: tv
+
     schemas:
       default:
         path: schemas/series.md
         name: New Series
+
     fields:
       - name: series_name
         label: Series Name
@@ -127,34 +130,19 @@ collections_config:
       - name: seasons
         label: Seasons
         type: array
-        options:
-          # Optional: prevent too many seasons if needed
-          min_items: 1
-          # max_items: 10
         structures:
           - name: Season
             label: Add Season
             icon: folder
             values:
-              season_number: 1  # Default starting value
+              season_number: 1
               episodes: []
-            preview:  # <--- THIS MAKES SEASONS SHOW MEANINGFUL LABELS
-              text:
-                - key: season_number
-                  fallback: "Season ?"
-                - template: "Season {season_number}"
-              subtext:
-                - key: episodes.length
-                  template: "{value} episodes"
-                  fallback: "No episodes yet"
-              icon: folder
             fields:
               - name: season_number
-                label: Season Number (auto-fixed on build)
+                label: Season Number
                 type: number
-                comment: "Enter any number — it will be renumbered sequentially (1,2,3...) when site builds."
               - name: episodes
-                label: Episodes in this Season
+                label: Episodes
                 type: array
                 structures:
                   - name: Episode
@@ -164,23 +152,12 @@ collections_config:
                       episode_number: 1
                       episode_title: "New Episode"
                       video_url: ""
-                    preview:  # <--- THIS MAKES EPISODES SHOW MEANINGFUL LABELS
-                      text:
-                        - key: episode_number
-                          fallback: "Episode ?"
-                        - template: "Episode {episode_number}: {episode_title}"
-                      subtext:
-                        - key: video_url
-                          fallback: "No video URL"
-                          template: "Has video"
-                      icon: play_circle
                     fields:
                       - name: episode_number
-                        label: Episode Number (auto-fixed on build)
+                        label: Episode No.
                         type: number
-                        comment: "Enter any number — it will be renumbered per season on build."
                       - name: episode_title
-                        label: Episode Title
+                        label: Title
                         type: text
                       - name: video_url
                         label: Video URL
