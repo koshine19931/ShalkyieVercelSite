@@ -85,10 +85,24 @@ collections_config:
       icon:
         icon: tv
 
-    schemas:
-      default:
-        path: schemas/series.md
-        name: New Series
+    _inputs:
+      seasons:
+        type: array
+        options:
+          item_preview:
+            text:
+              - key: season_number
+                prefix: "Season "
+              - "New Season"
+      episodes:
+        type: array
+        options:
+          item_preview:
+            text:
+              - key: episode_number
+                prefix: "Episode "
+              - key: episode_title
+              - "New Episode"
 
     fields:
       - name: series_name
