@@ -135,12 +135,12 @@ collections_config:
             label: Add Season
             icon: folder
             values:
-              season_number: 1
               episodes: []
             fields:
               - name: season_number
                 label: Season Number
                 type: number
+                comment: "Leave blank or 0 to auto-calculate based on position"
               - name: episodes
                 label: Episodes
                 type: array
@@ -149,13 +149,13 @@ collections_config:
                     label: Add Episode
                     icon: play_circle
                     values:
-                      episode_number: 1
                       episode_title: "New Episode"
                       video_url: ""
                     fields:
                       - name: episode_number
                         label: Episode No.
                         type: number
+                        comment: "Leave blank or 0 to auto-calculate based on position"
                       - name: episode_title
                         label: Title
                         type: text
