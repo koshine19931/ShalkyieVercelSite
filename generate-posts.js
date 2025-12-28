@@ -59,7 +59,7 @@ function generateSeriesJson() {
                     return {
                         episode_number: episode.episode_number || (episodeIndex + 1),
                         video_url: episode.video_url || '',
-                        episode_title: episode.episode_title || ''
+                        episode_title: episode.episode_title || `Episode ${episode.episode_number || (episodeIndex + 1)}`
                     };
                 });
                 

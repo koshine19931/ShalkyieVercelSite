@@ -132,7 +132,7 @@ collections_config:
         type: array
         structures:
           - name: Season
-            label: Add Season
+            label: Season
             icon: folder
             values:
               episodes: []
@@ -146,7 +146,7 @@ collections_config:
                 type: array
                 structures:
                   - name: Episode
-                    label: Add Episode
+                    label: Episode
                     icon: play_circle
                     values:
                       episode_title: "New Episode"
