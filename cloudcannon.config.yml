@@ -94,28 +94,49 @@ collections_config:
       - name: series_name
         label: Series Name
         type: text
-      
+      - name: title
+        label: Title (Slug)
+        type: text
       - name: date
         label: Publish Date
         type: datetime
         instance_value: NOW
         options:
           timezone: "Asia/Yangon"
-      
-      # --- FIX FOR SEASONS ---
+      - name: description
+        label: Description
+        type: textarea
+      - name: category
+        label: Category
+        type: select
+        options:
+          values:
+            - Action
+            - Comedy
+            - Drama
+            - Horror
+            - Romance
+            - Thriller
+            - Sci-Fi
+            - Other
+      - name: tags
+        label: Tags
+        type: multiselect
+        options:
+          allow_create: true
+          values:
+            - New
+            - Popular
       - name: seasons
         label: Seasons
         type: array
-        # This 'structures' block creates the "Add Season" button
         structures:
           - name: Season
             label: Add Season
             icon: folder
-            # This 'values' block defines what a new season looks like by default
             values:
               season_number: 1
               episodes: []
-            # This defines the fields INSIDE a season
             fields:
               - name: season_number
                 label: Season Number
@@ -123,7 +144,6 @@ collections_config:
               - name: episodes
                 label: Episodes
                 type: array
-                # This 'structures' block creates the "Add Episode" button
                 structures:
                   - name: Episode
                     label: Add Episode
