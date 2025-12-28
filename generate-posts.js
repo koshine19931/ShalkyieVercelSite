@@ -54,13 +54,12 @@ function generateSeriesJson() {
             
             // Auto-number seasons and episodes if not provided, otherwise keep user's numbers
             const seasonsWithNumbers = (frontMatter.seasons || []).map((season, seasonIndex) => {
-                const seasonNumber = parseInt(season.season_number) || (seasonIndex + 1);
+                const seasonNumber = season.season_number || (seasonIndex + 1);
                 const episodesWithNumbers = (season.episodes || []).map((episode, episodeIndex) => {
-                    const episodeNumber = parseInt(episode.episode_number) || (episodeIndex + 1);
                     return {
-                        episode_number: episodeNumber,
+                        episode_number: episode.episode_number || (episodeIndex + 1),
                         video_url: episode.video_url || '',
-                        episode_title: episode.episode_title || `Episode ${episodeNumber}`
+                        episode_title: episode.episode_title || ''
                     };
                 });
                 
