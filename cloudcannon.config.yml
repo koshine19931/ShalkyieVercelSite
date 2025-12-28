@@ -93,7 +93,7 @@ collections_config:
             text:
               - key: season_number
                 prefix: "Season "
-              - "New Season"
+              - "Season"
       "seasons[*]":
         type: object
         options:
@@ -101,7 +101,7 @@ collections_config:
             text:
               - key: season_number
                 prefix: "Season "
-              - "New Season"
+              - "Season"
       episodes:
         type: array
         options:
@@ -110,7 +110,7 @@ collections_config:
               - key: episode_number
                 prefix: "Episode "
               - key: episode_title
-              - "New Episode"
+              - "Episode"
       "seasons[*].episodes":
         type: array
         options:
@@ -119,7 +119,7 @@ collections_config:
               - key: episode_number
                 prefix: "Episode "
               - key: episode_title
-              - "New Episode"
+              - "Episode"
       "seasons[*].episodes[*]":
         type: object
         options:
@@ -128,7 +128,7 @@ collections_config:
               - key: episode_number
                 prefix: "Episode "
               - key: episode_title
-              - "New Episode"
+              - "Episode"
 
     fields:
       - name: series_name
@@ -180,7 +180,7 @@ collections_config:
               - name: season_number
                 label: Season Number
                 type: number
-                comment: "Leave blank or 0 to auto-calculate based on position"
+                comment: "Leave blank to auto-calculate"
               - name: episodes
                 label: Episodes
                 type: array
@@ -189,13 +189,13 @@ collections_config:
                     label: Episode
                     icon: play_circle
                     values:
-                      episode_title: "New Episode"
+                      episode_title: ""
                       video_url: ""
                     fields:
                       - name: episode_number
                         label: Episode No.
                         type: number
-                        comment: "Leave blank or 0 to auto-calculate based on position"
+                        comment: "Leave blank to auto-calculate"
                       - name: episode_title
                         label: Title
                         type: text
