@@ -4,7 +4,6 @@ title: ""
 date: null
 description: ""
 category: "Other"
-tags: []
 seasons:
   - season_number: 1
     episodes:
