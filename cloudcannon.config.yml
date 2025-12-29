@@ -54,15 +54,6 @@ collections_config:
             - Sci-Fi
             - Other
           allow_empty: false
-      - name: tags
-        label: Tags
-        type: multiselect
-        options:
-          allow_create: true
-          values:
-            - New
-            - Popular
-          allow_empty: true
 
     schemas:
       default:
@@ -120,15 +111,6 @@ collections_config:
             - Thriller
             - Sci-Fi
             - Other
-      - name: tags
-        label: Tags
-        type: multiselect
-        options:
-          allow_create: true
-          values:
-            - New
-            - Popular
-          allow_empty: true
       - name: seasons
         label: Seasons
         type: array
