@@ -62,6 +62,7 @@ collections_config:
           values:
             - New
             - Popular
+          allow_empty: true
 
     schemas:
       default:
@@ -127,6 +128,7 @@ collections_config:
           values:
             - New
             - Popular
+          allow_empty: true
       - name: seasons
         label: Seasons
         type: array
