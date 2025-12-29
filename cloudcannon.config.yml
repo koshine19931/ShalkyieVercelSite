@@ -56,13 +56,16 @@ collections_config:
           allow_empty: false
       - name: tags
         label: Tags
-        type: multiselect
+        type: array
         options:
           allow_create: true
           values:
             - New
             - Popular
-          allow_empty: true
+        structures:
+          values:
+            - label: New Tag
+              value: ""
 
     schemas:
       default:
@@ -122,13 +125,16 @@ collections_config:
             - Other
       - name: tags
         label: Tags
-        type: multiselect
+        type: array
         options:
           allow_create: true
           values:
             - New
             - Popular
-          allow_empty: true
+        structures:
+          values:
+            - label: New Tag
+              value: ""
       - name: seasons
         label: Seasons
         type: array
