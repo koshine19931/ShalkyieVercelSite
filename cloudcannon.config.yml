@@ -58,11 +58,10 @@ collections_config:
         label: Tags
         type: multiselect
         options:
-          allow_create: true
           values:
             - New
             - Popular
-        entry: text  # ← Fix for misconfigured array error
+          allow_create: true  # Users can add new tags
 
     schemas:
       default:
@@ -77,7 +76,6 @@ collections_config:
     sort_key: date
     sort_options:
       order: desc
-    
     preview:
       text:
         key: series_name
@@ -85,12 +83,6 @@ collections_config:
         key: date
       icon:
         icon: tv
-
-    schemas:
-      default:
-        path: schemas/series.md
-        name: New Series
-
     fields:
       - name: series_name
         label: Series Name
@@ -124,11 +116,10 @@ collections_config:
         label: Tags
         type: multiselect
         options:
-          allow_create: true
           values:
             - New
             - Popular
-        entry: text  # ← Fix for misconfigured array error
+          allow_create: true
       - name: seasons
         label: Seasons
         type: array
