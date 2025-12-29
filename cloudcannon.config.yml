@@ -59,9 +59,6 @@ collections_config:
         type: array
         options:
           allow_create: true
-          values:
-            - New
-            - Popular
         structures:
           values:
             - label: New Tag
@@ -128,9 +125,6 @@ collections_config:
         type: array
         options:
           allow_create: true
-          values:
-            - New
-            - Popular
         structures:
           values:
             - label: New Tag
