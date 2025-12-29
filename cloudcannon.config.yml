@@ -1,6 +1,13 @@
 # CloudCannon Configuration
 source: .
 
+# Global pagination: 30 items per page for all collections
+pagination:
+  per_page: 30
+  per_page_options: [10, 20, 30, 50, 100]  # Let editors choose if needed
+  sort_by: date
+  sort_direction: desc
+
 collections_config:
   posts:
     path: _posts
@@ -17,6 +24,8 @@ collections_config:
         key: date
       icon:
         icon: movie
+    pagination:
+      per_page: 30  # Explicit for this collection (optional override)
     fields:
       - name: movie_name
         label: Movie Name (Display)
@@ -62,7 +71,6 @@ collections_config:
           values:
             - New
             - Popular
-
     schemas:
       default:
         path: schemas/post.md
@@ -76,7 +84,6 @@ collections_config:
     sort_key: date
     sort_options:
       order: desc
-    
     preview:
       text:
         key: series_name
@@ -84,12 +91,12 @@ collections_config:
         key: date
       icon:
         icon: tv
-
+    pagination:
+      per_page: 30  # 30 series per page
     schemas:
       default:
         path: schemas/series.md
         name: New Series
-
     fields:
       - name: series_name
         label: Series Name
@@ -130,6 +137,8 @@ collections_config:
       - name: seasons
         label: Seasons
         type: array
+        options:
+          min_items: 1  # At least one season recommended
         structures:
           - name: Season
             label: Add Season
@@ -137,12 +146,21 @@ collections_config:
             values:
               season_number: 1
               episodes: []
+            preview:
+              text:
+                - template: "Season {season_number}"
+                - fallback: "New Season"
+              subtext:
+                - template: "{episodes.length} episodes"
+                - fallback: "No episodes yet"
+              icon: folder
             fields:
               - name: season_number
-                label: Season Number
+                label: Season Number (auto-fixed on build)
                 type: number
+                comment: "Enter any number — it will be automatically renumbered sequentially (1, 2, 3...) when the site builds."
               - name: episodes
-                label: Episodes
+                label: Episodes in this Season
                 type: array
                 structures:
                   - name: Episode
@@ -152,12 +170,23 @@ collections_config:
                       episode_number: 1
                       episode_title: "New Episode"
                       video_url: ""
+                    preview:
+                      text:
+                        - template: "Episode {episode_number}: {episode_title}"
+                        - template: "Episode {episode_number}"
+                        - fallback: "New Episode"
+                      subtext:
+                        - key: video_url
+                          template: "Has video"
+                          fallback: "No video URL yet"
+                      icon: play_circle
                     fields:
                       - name: episode_number
-                        label: Episode No.
+                        label: Episode Number (auto-fixed on build)
                         type: number
+                        comment: "Enter any number — it will be renumbered per season on build."
                       - name: episode_title
-                        label: Title
+                        label: Episode Title
                         type: text
                       - name: video_url
                         label: Video URL
