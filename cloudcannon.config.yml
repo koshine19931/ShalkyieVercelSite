@@ -56,13 +56,13 @@ collections_config:
           allow_empty: false
       - name: tags
         label: Tags
-        type: array
+        type: multiselect
         options:
           allow_create: true
-        structures:
           values:
-            - label: New Tag
-              value: ""
+            - New
+            - Popular
+        entry: text  # ← Fix for misconfigured array error
 
     schemas:
       default:
@@ -122,13 +122,13 @@ collections_config:
             - Other
       - name: tags
         label: Tags
-        type: array
+        type: multiselect
         options:
           allow_create: true
-        structures:
           values:
-            - label: New Tag
-              value: ""
+            - New
+            - Popular
+        entry: text  # ← Fix for misconfigured array error
       - name: seasons
         label: Seasons
         type: array
