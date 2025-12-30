@@ -233,6 +233,10 @@ function createHomePostHTML(content) {
 function createFullVideoHTML(content) {
     const videoUrl = getResolutionUrl(content.videoUrl, hdEnabled);
     const isHD = isHDUrl(videoUrl);
+    // Explicitly log for debugging
+    console.log('Video Content:', content);
+    console.log('Poster URL:', content.thumbnail);
+    
     return `
         <div class="post-page">
             <article class="post-outer">
@@ -242,7 +246,7 @@ function createFullVideoHTML(content) {
                 <div class="video-container">
                     <div class="video-wrapper" id="video-wrapper-${content.id}">
                         ${getResolutionIndicatorHTML(isHD, 'resolution-indicator')}
-                        <video id="video-${content.id}" controls preload="metadata" ${autoPlayEnabled ? 'autoplay' : ''} data-original-url="${content.videoUrl}" ${content.thumbnail ? `poster="${content.thumbnail}"` : ''}>
+                        <video id="video-${content.id}" controls preload="auto" ${autoPlayEnabled ? 'autoplay' : ''} data-original-url="${content.videoUrl}" ${content.thumbnail ? `poster="${content.thumbnail}"` : ''} playsinline style="width: 100%; background: black;">
                             <source src="${videoUrl}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -358,7 +362,7 @@ function playEpisode(videoUrl, seriesTitle, seasonNumber, episodeNumber) {
             </div>
             <div class="episode-video-wrapper" id="episode-video-wrapper">
                 ${getResolutionIndicatorHTML(isHD, 'episode-resolution-indicator')}
-                <video id="episode-video" controls autoplay data-original-url="${videoUrl}" ${content.thumbnail ? `poster="${content.thumbnail}"` : ''}>
+                <video id="episode-video" controls autoplay data-original-url="${videoUrl}" ${content.thumbnail ? `poster="${content.thumbnail}"` : ''} playsinline style="width: 100%; background: black;">
                     <source src="${resolutionUrl}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>

@@ -468,6 +468,7 @@ video {
     background: black;
     border-radius: 8px;
     outline: none;
+    object-fit: contain; /* Ensure poster image fits correctly */
 }
 
 @media (min-width: 768px) {
