@@ -8,6 +8,7 @@ collections_config:
     name: Videos
     icon: local_movies
     sort_key: date
+    search_fields: ["movie_name", "title", "description", "category", "tags"]
     sort_options:
       order: desc
     preview:
@@ -78,6 +79,7 @@ collections_config:
     name: Series
     icon: live_tv
     sort_key: date
+    search_fields: ["series_name", "title", "description", "category", "tags"]
     sort_options:
       order: desc
     
