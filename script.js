@@ -242,7 +242,7 @@ function createFullVideoHTML(content) {
                 <div class="video-container">
                     <div class="video-wrapper" id="video-wrapper-${content.id}">
                         ${getResolutionIndicatorHTML(isHD, 'resolution-indicator')}
-                        <video id="video-${content.id}" controls preload="metadata" ${autoPlayEnabled ? 'autoplay' : ''} data-original-url="${content.videoUrl}">
+                        <video id="video-${content.id}" controls preload="metadata" ${autoPlayEnabled ? 'autoplay' : ''} data-original-url="${content.videoUrl}" ${content.thumbnail ? `poster="${content.thumbnail}"` : ''}>
                             <source src="${videoUrl}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -358,7 +358,7 @@ function playEpisode(videoUrl, seriesTitle, seasonNumber, episodeNumber) {
             </div>
             <div class="episode-video-wrapper" id="episode-video-wrapper">
                 ${getResolutionIndicatorHTML(isHD, 'episode-resolution-indicator')}
-                <video id="episode-video" controls autoplay data-original-url="${videoUrl}">
+                <video id="episode-video" controls autoplay data-original-url="${videoUrl}" ${content.thumbnail ? `poster="${content.thumbnail}"` : ''}>
                     <source src="${resolutionUrl}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
