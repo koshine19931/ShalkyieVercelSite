@@ -58,6 +58,15 @@ body {
     border-radius: 0;
 }
 
+.post-thumbnail[style] .play-overlay {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.post-thumbnail[style]:hover .play-overlay {
+    opacity: 1;
+}
+
 .play-overlay {
     position: absolute;
     top: 0;

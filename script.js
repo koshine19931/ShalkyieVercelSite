@@ -201,17 +201,22 @@ function createHomePostHTML(content) {
     const isSeries = content.type === 'series';
     const typeLabel = isSeries ? 'SERIES' : 'VIDEO';
     const iconClass = isSeries ? 'fa-tv' : 'fa-play-circle';
+    const thumbnailStyle = content.thumbnail ? `style="background-image: url('${content.thumbnail}'); background-size: cover; background-position: center;"` : '';
 
     return `
         <article class="post-preview" onclick="openPost('${content.id}')">
-            <div class="post-thumbnail ${isSeries ? 'series-thumbnail' : ''}">
-                ${isSeries ? `
+            <div class="post-thumbnail ${isSeries ? 'series-thumbnail' : ''}" ${thumbnailStyle}>
+                ${isSeries && !content.thumbnail ? `
                     <div class="series-preview-icon">
                         <i class="fas fa-tv"></i>
                     </div>
-                ` : `
+                ` : !isSeries && !content.thumbnail ? `
                     <div class="play-overlay">
                         <i class="fas fa-play"></i>
+                    </div>
+                ` : `
+                    <div class="play-overlay" style="background: rgba(0,0,0,0.2)">
+                        <i class="fas ${isSeries ? 'fa-tv' : 'fa-play'}"></i>
                     </div>
                 `}
             </div>

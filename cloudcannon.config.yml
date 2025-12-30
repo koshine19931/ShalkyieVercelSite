@@ -34,6 +34,9 @@ collections_config:
       - name: video_url
         label: Video URL
         type: text
+      - name: thumbnail
+        label: Thumbnail (Poster) URL
+        type: text
       - name: description
         label: Description
         type: textarea
@@ -54,6 +57,15 @@ collections_config:
             - Sci-Fi
             - Other
           allow_empty: false
+      - name: tags
+        label: Tags
+        type: array
+        options:
+          allow_create: true
+        structures:
+          values:
+            - label: New Tag
+              value: ""
 
     schemas:
       default:
@@ -89,6 +101,9 @@ collections_config:
       - name: title
         label: Title (Slug)
         type: text
+      - name: thumbnail
+        label: Thumbnail (Poster) URL
+        type: text
       - name: date
         label: Publish Date
         type: datetime
@@ -111,6 +126,15 @@ collections_config:
             - Thriller
             - Sci-Fi
             - Other
+      - name: tags
+        label: Tags
+        type: array
+        options:
+          allow_create: true
+        structures:
+          values:
+            - label: New Tag
+              value: ""
       - name: seasons
         label: Seasons
         type: array

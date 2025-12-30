@@ -22,6 +22,7 @@ function generatePostsJson() {
                 title: frontMatter.title || 'Untitled',
                 movie_name: frontMatter.movie_name || frontMatter.title || 'Untitled',
                 video_url: frontMatter.video_url || '',
+                thumbnail: frontMatter.thumbnail || '',
                 description: frontMatter.description || '',
                 date: frontMatter.date || new Date().toISOString(),
                 featured: frontMatter.featured || false,
@@ -54,12 +55,13 @@ function generateSeriesJson() {
             
             // Auto-number seasons and episodes if not provided, otherwise keep user's numbers
             const seasonsWithNumbers = (frontMatter.seasons || []).map((season, seasonIndex) => {
-                const seasonNumber = season.season_number || (seasonIndex + 1);
+                const seasonNumber = parseInt(season.season_number) || (seasonIndex + 1);
                 const episodesWithNumbers = (season.episodes || []).map((episode, episodeIndex) => {
+                    const episodeNumber = parseInt(episode.episode_number) || (episodeIndex + 1);
                     return {
-                        episode_number: episode.episode_number || (episodeIndex + 1),
+                        episode_number: episodeNumber,
                         video_url: episode.video_url || '',
-                        episode_title: episode.episode_title || ''
+                        episode_title: episode.episode_title || `Episode ${episodeNumber}`
                     };
                 });
                 
@@ -73,6 +75,7 @@ function generateSeriesJson() {
                 type: 'series',
                 title: frontMatter.title || 'Untitled Series',
                 series_name: frontMatter.series_name || frontMatter.title || 'Untitled Series',
+                thumbnail: frontMatter.thumbnail || '',
                 seasons: seasonsWithNumbers,
                 description: frontMatter.description || '',
                 date: frontMatter.date || new Date().toISOString(),
