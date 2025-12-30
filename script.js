@@ -233,9 +233,7 @@ function createHomePostHTML(content) {
 function createFullVideoHTML(content) {
     const videoUrl = getResolutionUrl(content.videoUrl, hdEnabled);
     const isHD = isHDUrl(videoUrl);
-    // Explicitly log for debugging
-    console.log('Video Content:', content);
-    console.log('Poster URL:', content.thumbnail);
+    const posterAttr = content.thumbnail ? `poster="${content.thumbnail}"` : '';
     
     return `
         <div class="post-page">
@@ -246,7 +244,7 @@ function createFullVideoHTML(content) {
                 <div class="video-container">
                     <div class="video-wrapper" id="video-wrapper-${content.id}">
                         ${getResolutionIndicatorHTML(isHD, 'resolution-indicator')}
-                        <video id="video-${content.id}" controls preload="auto" ${autoPlayEnabled ? 'autoplay' : ''} data-original-url="${content.videoUrl}" ${content.thumbnail ? `poster="${content.thumbnail}"` : ''} playsinline style="width: 100%; background: black;">
+                        <video id="video-${content.id}" controls preload="metadata" ${autoPlayEnabled ? 'autoplay' : ''} data-original-url="${content.videoUrl}" ${posterAttr} playsinline style="width: 100%; background: black;">
                             <source src="${videoUrl}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
@@ -352,6 +350,8 @@ function playEpisode(videoUrl, seriesTitle, seasonNumber, episodeNumber) {
     const resolutionUrl = getResolutionUrl(videoUrl, hdEnabled);
     const isHD = isHDUrl(resolutionUrl);
 
+    const posterAttr = content.thumbnail ? `poster="${content.thumbnail}"` : '';
+
     const videoPlayerHTML = `
         <div class="fullscreen-video-overlay" id="episode-player">
             <div class="video-header">
@@ -362,7 +362,7 @@ function playEpisode(videoUrl, seriesTitle, seasonNumber, episodeNumber) {
             </div>
             <div class="episode-video-wrapper" id="episode-video-wrapper">
                 ${getResolutionIndicatorHTML(isHD, 'episode-resolution-indicator')}
-                <video id="episode-video" controls autoplay data-original-url="${videoUrl}" ${content.thumbnail ? `poster="${content.thumbnail}"` : ''} playsinline style="width: 100%; background: black;">
+                <video id="episode-video" controls autoplay data-original-url="${videoUrl}" playsinline style="width: 100%; background: black;">
                     <source src="${resolutionUrl}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -383,6 +383,12 @@ function playEpisode(videoUrl, seriesTitle, seasonNumber, episodeNumber) {
 
     const resumeKey = getResumeKey(videoUrl);
     const savedTime = localStorage.getItem(`video-time-${resumeKey}`);
+    
+    // Ensure poster is shown by not preloading the whole video if not autoplaying
+    if (!autoPlayEnabled) {
+        video.preload = "metadata";
+    }
+
     if (savedTime && !isNaN(savedTime)) {
         video.addEventListener('loadedmetadata', function restoreTime() {
             video.currentTime = parseFloat(savedTime);
@@ -573,7 +579,7 @@ function loadPostPage(contentId) {
 
         if (content.type === 'video') {
             setTimeout(() => {
-                initVideoPlayer(content.id, content.videoUrl);
+                initVideoPlayer(content.id, content.videoUrl, content);
             }, 100);
         }
     }, 200);
@@ -592,7 +598,7 @@ function goHome() {
     loadHomePage(currentPage);
 }
 
-function initVideoPlayer(videoId, videoUrl) {
+function initVideoPlayer(videoId, videoUrl, content = {}) {
     const video = document.getElementById(`video-${videoId}`);
     if (!video) return;
 
@@ -606,6 +612,15 @@ function initVideoPlayer(videoId, videoUrl) {
 
     const resumeKey = getResumeKey(videoUrl);
     const savedTime = localStorage.getItem(`video-time-${resumeKey}`);
+    
+    // Ensure poster is shown by not preloading the whole video if not autoplaying
+    if (!autoPlayEnabled) {
+        video.preload = "metadata";
+        if (content.thumbnail) {
+            video.poster = content.thumbnail;
+        }
+    }
+
     if (savedTime && !isNaN(savedTime)) {
         video.currentTime = parseFloat(savedTime);
     }
