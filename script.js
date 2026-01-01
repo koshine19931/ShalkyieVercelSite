@@ -350,8 +350,6 @@ function playEpisode(videoUrl, seriesTitle, seasonNumber, episodeNumber) {
     const resolutionUrl = getResolutionUrl(videoUrl, hdEnabled);
     const isHD = isHDUrl(resolutionUrl);
 
-    const posterAttr = content.thumbnail ? `poster="${content.thumbnail}"` : '';
-
     const videoPlayerHTML = `
         <div class="fullscreen-video-overlay" id="episode-player">
             <div class="video-header">
