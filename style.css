@@ -826,60 +826,6 @@ video {
     margin-bottom: 10px;
 }
 
-/* Custom Download Button Overlay */
-.custom-download-btn {
-    position: absolute;
-    bottom: 45px;
-    right: 50px;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 2147483647;
-    transition: all 0.2s ease;
-}
-
-.custom-download-btn:hover {
-    background: #28a745;
-    transform: scale(1.1);
-}
-
-.custom-download-btn i {
-    font-size: 16px;
-}
-
-/* Position for episode player which might have different UI */
-.episode-dl {
-    bottom: 60px;
-    right: 20px;
-}
-
-/* Hide native download if browser ignores controlsList */
-video::-internal-media-controls-download-button {
-    display:none;
-}
-video::-webkit-media-controls-enclosure {
-    overflow:hidden;
-}
-video::-webkit-media-controls-panel {
-    width: calc(100% + 30px); /* Shift panel to hide native download if on right */
-}
-
-@media (max-width: 768px) {
-    .custom-download-btn {
-        bottom: 40px;
-        right: 45px;
-        width: 32px;
-        height: 32px;
-    }
-}
-
 /* Series Styles */
 .content-type-badge {
     display: inline-block;

@@ -244,13 +244,10 @@ function createFullVideoHTML(content) {
                 <div class="video-container">
                     <div class="video-wrapper" id="video-wrapper-${content.id}">
                         ${getResolutionIndicatorHTML(isHD, 'resolution-indicator')}
-                        <video id="video-${content.id}" controls controlsList="nodownload" preload="metadata" ${autoPlayEnabled ? 'autoplay' : ''} data-original-url="${content.videoUrl}" ${posterAttr} playsinline style="width: 100%; background: black;">
+                        <video id="video-${content.id}" controls preload="metadata" ${autoPlayEnabled ? 'autoplay' : ''} data-original-url="${content.videoUrl}" ${posterAttr} playsinline style="width: 100%; background: black;">
                             <source src="${videoUrl}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <button class="custom-download-btn" onclick="triggerDownload('${videoUrl}', '${content.title}')" title="Download Video">
-                            <i class="fas fa-download"></i>
-                        </button>
                     </div>
                     <div class="video-buttons">
                         <button class="video-btn fullscreen-btn" onclick="goFullScreen('${content.id}')">
@@ -363,13 +360,10 @@ function playEpisode(videoUrl, seriesTitle, seasonNumber, episodeNumber) {
             </div>
             <div class="episode-video-wrapper" id="episode-video-wrapper">
                 ${getResolutionIndicatorHTML(isHD, 'episode-resolution-indicator')}
-                <video id="episode-video" controls controlsList="nodownload" autoplay data-original-url="${videoUrl}" playsinline style="width: 100%; background: black;">
+                <video id="episode-video" controls autoplay data-original-url="${videoUrl}" playsinline style="width: 100%; background: black;">
                     <source src="${resolutionUrl}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <button class="custom-download-btn episode-dl" onclick="triggerDownload('${resolutionUrl}', '${episodeTitle}')" title="Download Episode">
-                    <i class="fas fa-download"></i>
-                </button>
             </div>
             <div class="video-buttons">
                 <button class="video-btn fullscreen-btn" onclick="goEpisodeFullScreen()">
@@ -600,15 +594,6 @@ function goToPage(page) {
 
 function goHome() {
     loadHomePage(currentPage);
-}
-
-function triggerDownload(url, filename) {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename || 'video.mp4';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
 }
 
 function initVideoPlayer(videoId, videoUrl, content = {}) {
