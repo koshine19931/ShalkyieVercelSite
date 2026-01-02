@@ -1,6 +1,19 @@
 ---
-title: 7D42D7
+_schema: default
 series_name: Our Golden Days (2025)
+title: 7D42D7
+thumbnail: ''
+date: 2025-12-04T00:51:00+06:30
+description: |-
+  ✅ Transfer Complete
+
+  File: Our Golden Days (2025) E01 WEB-DL 720p (CM).mp4
+  Name: XS-7D42D7.mp4
+  Size: 653.2 MB
+  Source: Direct Link
+  Archive URL: https://archive.org/download/seriezSK/XS-7D42D7.mp4
+category: Other
+tags: []
 seasons:
   - season_number: 1
     episodes:
@@ -78,15 +91,14 @@ seasons:
         video_url: https://archive.org/download/seriez3SK/XS3-67C236.mpeg4
       - episode_number: 37
         video_url: https://archive.org/download/seriez3SK/XS3-5492C2.mpeg4
-description: |-
-  ✅ Transfer Complete
-
-  File: Our Golden Days (2025) E01 WEB-DL 720p (CM).mp4
-  Name: XS-7D42D7.mp4
-  Size: 653.2 MB
-  Source: Direct Link
-  Archive URL: https://archive.org/download/seriezSK/XS-7D42D7.mp4
-date: 2025-12-04T00:51:00.000+06:30
-featured: false
-category: Other
+      - episode_number: 38
+        video_url: https://archive.org/download/seriezSK/XS-89BE80.mpeg4
+      - episode_number: 39
+        video_url: https://archive.org/download/seriezSK/XS-C98314.mpeg4
+      - episode_number: 40
+        video_url: https://archive.org/download/seriezSK/XS-F65B67.mpeg4
+      - episode_number: 41
+        video_url: https://archive.org/download/seriezSK/XS-04F27E.mpeg4
+      - episode_number: 42
+        video_url: https://archive.org/download/seriezSK/XS-0D2D5B.mpeg4
 ---
