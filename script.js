@@ -296,7 +296,10 @@ function createFullSeriesHTML(content) {
                 <div class="episodes-dropdown" id="season-${seasonIndex}">
                     ${episodesHTML}
                 </div>
-                <div class="scroll-indicator" id="indicator-${seasonIndex}">▾</div>
+                <div class="scroll-indicator" id="indicator-${seasonIndex}">
+                    <div class="indicator-gradient"></div>
+                    <div class="arrow-symbol">▾</div>
+                </div>
             </div>
         `;
     }).join('');
