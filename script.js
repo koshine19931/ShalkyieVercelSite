@@ -296,6 +296,7 @@ function createFullSeriesHTML(content) {
                 <div class="episodes-dropdown" id="season-${seasonIndex}">
                     ${episodesHTML}
                 </div>
+                <div class="scroll-indicator" id="indicator-${seasonIndex}">▾</div>
             </div>
         `;
     }).join('');
@@ -343,6 +344,24 @@ function toggleSeason(seasonIndex) {
 
     dropdown.classList.toggle('open');
     currentlyExpandedSeason = dropdown.classList.contains('open') ? seasonIndex : null;
+
+    if (dropdown.classList.contains('open')) {
+        const indicator = document.getElementById(`indicator-${seasonIndex}`);
+        setTimeout(() => {
+            if (dropdown.scrollHeight > dropdown.clientHeight) {
+                dropdown.classList.add('has-scroll');
+                if (indicator) indicator.style.display = 'block';
+
+                dropdown.onscroll = () => {
+                    if (dropdown.scrollTop + dropdown.clientHeight >= dropdown.scrollHeight - 20) {
+                        if (indicator) indicator.style.opacity = '0';
+                    } else {
+                        if (indicator) indicator.style.opacity = '1';
+                    }
+                };
+            }
+        }, 450);
+    }
 }
 
 function playEpisode(videoUrl, seriesTitle, seasonNumber, episodeNumber) {

@@ -907,8 +907,55 @@ video {
 }
 
 .episodes-dropdown.open {
-    max-height: 2000px;
-    padding: 10px;
+    max-height: 400px; /* Show about 10.5 episodes as requested */
+    padding: 10px 10px 40px 10px; /* Added bottom padding for the indicator */
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ff6b35 #2a2a2a;
+    position: relative;
+}
+
+/* Scroll indicator container */
+.episodes-container {
+    position: relative;
+    width: 100%;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ff6b35;
+    font-size: 24px;
+    animation: bounce 2s infinite;
+    pointer-events: none;
+    z-index: 10;
+    display: none; /* Hidden by default */
+}
+
+.episodes-dropdown.has-scroll + .scroll-indicator {
+    display: block;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+    40% {transform: translateX(-50%) translateY(-10px);}
+    60% {transform: translateX(-50%) translateY(-5px);}
+}
+
+.episodes-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.episodes-dropdown::-webkit-scrollbar-track {
+    background: #2a2a2a;
+    border-radius: 10px;
+}
+
+.episodes-dropdown::-webkit-scrollbar-thumb {
+    background-color: #ff6b35;
+    border-radius: 10px;
 }
 
 .episode-btn {
