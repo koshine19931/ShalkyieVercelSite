@@ -3,7 +3,7 @@ _schema: default
 series_name: 'The Lord of the Rings: The Rings of Power (2022-2024)'
 title: C3B243
 thumbnail: https://archive.org/download/mmsub_thumb/3361.jpg
-date:
+date: 2026-1-2T18:25:00+06:30
 description: ''
 category: Other
 tags: []
