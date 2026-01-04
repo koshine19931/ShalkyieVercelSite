@@ -151,6 +151,7 @@ collections_config:
               - name: season_number
                 label: Season Number
                 type: number
+                hint: "Enter the season number (e.g., 1, 2, 3)"
               - name: episodes
                 label: Episodes
                 type: array
