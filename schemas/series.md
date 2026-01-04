@@ -2,7 +2,6 @@
 series_name: ""
 title: ""
 thumbnail: ""
-date: null
 description: ""
 category: "Other"
 tags: []
