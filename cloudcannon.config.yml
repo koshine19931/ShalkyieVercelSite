@@ -8,7 +8,6 @@ collections_config:
     name: Videos
     icon: local_movies
     sort_key: date
-    search_fields: ["movie_name", "title", "description", "category", "tags"]
     sort_options:
       order: desc
     preview:
@@ -58,15 +57,6 @@ collections_config:
             - Sci-Fi
             - Other
           allow_empty: false
-      - name: tags
-        label: Tags
-        type: array
-        options:
-          allow_create: true
-        structures:
-          values:
-            - label: New Tag
-              value: ""
 
     schemas:
       default:
@@ -79,7 +69,6 @@ collections_config:
     name: Series
     icon: live_tv
     sort_key: date
-    search_fields: ["series_name", "title", "description", "category", "tags"]
     sort_options:
       order: desc
     
@@ -103,9 +92,6 @@ collections_config:
       - name: title
         label: Title (Slug)
         type: text
-      - name: thumbnail
-        label: Thumbnail (Poster) URL
-        type: text
       - name: date
         label: Publish Date
         type: datetime
@@ -128,15 +114,6 @@ collections_config:
             - Thriller
             - Sci-Fi
             - Other
-      - name: tags
-        label: Tags
-        type: array
-        options:
-          allow_create: true
-        structures:
-          values:
-            - label: New Tag
-              value: ""
       - name: seasons
         label: Seasons
         type: array
