@@ -7,7 +7,9 @@ description: ""
 category: "Other"
 tags: []
 seasons:
-  - episodes:
-      - episode_title: ""
+  - season_number: 1
+    episodes:
+      - episode_number: 1
+        episode_title: ""
         video_url: ""
 ---
