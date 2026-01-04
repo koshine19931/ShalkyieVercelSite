@@ -92,6 +92,9 @@ collections_config:
       - name: title
         label: Title (Slug)
         type: text
+      - name: thumbnail
+        label: Thumbnail (Poster) URL
+        type: text
       - name: date
         label: Publish Date
         type: datetime
@@ -137,15 +140,11 @@ collections_config:
                     icon: play_circle
                     values:
                       episode_number: 1
-                      episode_title: "New Episode"
                       video_url: ""
                     fields:
                       - name: episode_number
-                        label: Episode No.
+                        label: Episode Number
                         type: number
-                      - name: episode_title
-                        label: Title
-                        type: text
                       - name: video_url
                         label: Video URL
                         type: text
