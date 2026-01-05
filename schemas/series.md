@@ -4,7 +4,6 @@ title: ""
 thumbnail: ""
 description: ""
 category: "Other"
-tags: []
 seasons:
   - season_number: 1
     episodes:
