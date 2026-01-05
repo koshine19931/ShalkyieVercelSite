@@ -6,5 +6,4 @@ video_url: ""
 description: ""
 featured: false
 category: Other
-tags: []
 ---
