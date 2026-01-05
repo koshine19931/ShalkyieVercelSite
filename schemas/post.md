@@ -1,8 +1,8 @@
 ---
-title: ""
 movie_name: ""
-video_url: ""
+title: ""
 thumbnail: ""
+video_url: ""
 description: ""
 featured: false
 category: Other
