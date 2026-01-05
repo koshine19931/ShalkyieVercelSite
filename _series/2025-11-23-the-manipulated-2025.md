@@ -1,6 +1,17 @@
 ---
-title: 8A8867
+_schema: default
 series_name: The Manipulated (2025)
+title: 8A8867
+thumbnail: ''
+description: |-
+  ✅ Transfer Complete
+
+  File: The Manipulated (2025) E01 WEB-DL 1080p.mp4
+  Name: XS3-8A8867.mp4
+  Size: 907.0 MB
+  Source: Direct Link
+  Archive URL: https://archive.org/download/seriez3SK/XS3-8A8867.mp4
+category: Other
 seasons:
   - season_number: 1
     episodes:
@@ -24,15 +35,8 @@ seasons:
         video_url: https://archive.org/download/seriez3SK/XS3-B8F258.mpeg4
       - episode_number: 10
         video_url: https://archive.org/download/seriez3SK/XS3-A309BB.mpeg4
-description: |-
-  ✅ Transfer Complete
-
-  File: The Manipulated (2025) E01 WEB-DL 1080p.mp4
-  Name: XS3-8A8867.mp4
-  Size: 907.0 MB
-  Source: Direct Link
-  Archive URL: https://archive.org/download/seriez3SK/XS3-8A8867.mp4
-date: 2025-12-02T04:11:00.000+06:30
-featured: false
-category: Other
+      - episode_number: 11
+        video_url: https://archive.org/download/seriez4SK/XS4-5F05FF.mpeg4
+      - episode_number: 12
+        video_url: https://archive.org/download/seriez4SK/XS4-D047C6.mpeg4
 ---
